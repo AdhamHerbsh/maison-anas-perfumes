@@ -1,0 +1,276 @@
+{
+  "products": [
+    {
+      "id": "prod-royal-oud",
+      "slug": "royal-oud-velvet",
+      "nameAr": "عود رويال فيلفيت",
+      "nameEn": "Royal Oud Velvet",
+      "subtitleAr": "عود كمبودي معتق وزعفران دافئ",
+      "subtitleEn": "Aged Cambodian Oud & Warm Saffron",
+      "descriptionAr": "توليفة شرقية ملكية تجمع بين دفء العود الكمبودي المعتق ولمسات الزعفران الفاخر والعنبر الذهبي لثبات يدوم طوال اليوم.",
+      "descriptionEn": "A regal oriental composition blending aged Cambodian oud with precious saffron threads and golden amber for all-day presence.",
+      "notesAr": [
+        "زعفران",
+        "عود كمبودي",
+        "عنبر دافئ"
+      ],
+      "notesEn": [
+        "Saffron",
+        "Cambodian Oud",
+        "Warm Amber"
+      ],
+      "category": "men",
+      "volumeMl": 100,
+      "concentration": "Extrait de Parfum",
+      "priceEgp": 490,
+      "originalPriceEgp": 620,
+      "longevity": 5,
+      "sillage": 5,
+      "inStock": false,
+      "featured": true,
+      "bottleTone": "obsidian"
+    },
+    {
+      "id": "prod-nuit-blanche",
+      "slug": "nuit-blanche-elixir",
+      "nameAr": "نوي بلانش إلكسير",
+      "nameEn": "Nuit Blanche Elixir",
+      "subtitleAr": "مسك أبيض نقي وفانيليا مدغشقر",
+      "subtitleEn": "Pure White Musk & Madagascar Vanilla",
+      "descriptionAr": "نعومة مخملية آسرة من المسك الأبيض الصافي مع لمسة فانيليا مدغشقر وزهر البرتقال، مصممة للذوق الهادئ الراقي.",
+      "descriptionEn": "Velvety luminosity uniting pure white musk with Madagascar vanilla bean and delicate orange blossom.",
+      "notesAr": [
+        "زهر البرتقال",
+        "مسك أبيض",
+        "فانيليا مدغشقر"
+      ],
+      "notesEn": [
+        "Orange Blossom",
+        "White Musk",
+        "Madagascar Vanilla"
+      ],
+      "category": "women",
+      "volumeMl": 100,
+      "concentration": "Eau de Parfum Intense",
+      "priceEgp": 440,
+      "originalPriceEgp": 550,
+      "longevity": 5,
+      "sillage": 4,
+      "inStock": true,
+      "featured": true,
+      "bottleTone": "ivory"
+    },
+    {
+      "id": "prod-amber-sultan",
+      "slug": "amber-sultan-reserve",
+      "nameAr": "عنبر سلطان ريزيرف",
+      "nameEn": "Amber Sultan Reserve",
+      "subtitleAr": "عنبر ذهبي وبرغموت إيطالي",
+      "subtitleEn": "Golden Amber & Italian Bergamot",
+      "descriptionAr": "توازن استثنائي للجنسين يبدأ بانتعاش البرغموت الإيطالي ويستقر على قاعدة غنية من العنبر الذهبي وخشب الصندل.",
+      "descriptionEn": "An effortless unisex signature opening with crisp Italian bergamot and settling into warm golden amber and sandalwood.",
+      "notesAr": [
+        "برغموت إيطالي",
+        "عنبر ذهبي",
+        "خشب الصندل"
+      ],
+      "notesEn": [
+        "Italian Bergamot",
+        "Golden Amber",
+        "Sandalwood"
+      ],
+      "category": "unisex",
+      "volumeMl": 100,
+      "concentration": "Extrait de Parfum",
+      "priceEgp": 465,
+      "originalPriceEgp": 580,
+      "longevity": 5,
+      "sillage": 4,
+      "inStock": true,
+      "featured": true,
+      "bottleTone": "champagne"
+    },
+    {
+      "id": "prod-rose-damascena",
+      "slug": "rose-damascena-soie",
+      "nameAr": "روز دمشقي سوا",
+      "nameEn": "Rose Damascena Soie",
+      "subtitleAr": "ورد دمشقي مخملي وباتشولي ناعم",
+      "subtitleEn": "Velvet Damask Rose & Soft Patchouli",
+      "descriptionAr": "باقة أنثوية فاخرة من الورد الدمشقي الطبيعي ممزوجة بلمسة حريرية من الباتشولي الأبيض والتوت الأحمر.",
+      "descriptionEn": "A luminous bouquet of Damask rose petals wrapped in silky white patchouli and subtle red berries.",
+      "notesAr": [
+        "توت أحمر",
+        "ورد دمشقي",
+        "باتشولي أبيض"
+      ],
+      "notesEn": [
+        "Red Berries",
+        "Damask Rose",
+        "White Patchouli"
+      ],
+      "category": "women",
+      "volumeMl": 100,
+      "concentration": "Eau de Parfum",
+      "priceEgp": 420,
+      "longevity": 4,
+      "sillage": 4,
+      "inStock": true,
+      "featured": false,
+      "bottleTone": "amber"
+    },
+    {
+      "id": "prod-noir-intense",
+      "slug": "noir-intense-prive",
+      "nameAr": "نوار إنتنس بريفيه",
+      "nameEn": "Noir Intense Privé",
+      "subtitleAr": "هيل أخضر وجلود مدخنة",
+      "subtitleEn": "Green Cardamom & Smoked Leather",
+      "descriptionAr": "حضور رجولي واثق يجمع بين انتعاش الهيل الأخضر ودفء الجلود الفاخرة ونجيل الهند.",
+      "descriptionEn": "A confident masculine signature pairing crisp green cardamom with supple smoked leather and vetiver.",
+      "notesAr": [
+        "هيل أخضر",
+        "جلود مدخنة",
+        "نجيل الهند"
+      ],
+      "notesEn": [
+        "Green Cardamom",
+        "Smoked Leather",
+        "Vetiver"
+      ],
+      "category": "men",
+      "volumeMl": 100,
+      "concentration": "Extrait de Parfum",
+      "priceEgp": 510,
+      "longevity": 5,
+      "sillage": 5,
+      "inStock": true,
+      "featured": false,
+      "bottleTone": "obsidian"
+    },
+    {
+      "id": "prod-cedre-blanc",
+      "slug": "cedre-blanc-atelier",
+      "nameAr": "سيدر بلانك أتيليه",
+      "nameEn": "Cèdre Blanc Atelier",
+      "subtitleAr": "خشب الأرز الأطلسي وشاي أبيض",
+      "subtitleEn": "Atlas Cedarwood & White Tea",
+      "descriptionAr": "عطر يومي راقٍ ومنعش للجنسين يجمع بين صفاء الشاي الأبيض ونقاء خشب الأرز الأطلسي.",
+      "descriptionEn": "A crisp, serene unisex daily scent combining white tea clarity with clean Atlas cedarwood.",
+      "notesAr": [
+        "شاي أبيض",
+        "أرز أطلسي",
+        "مسك ناعم"
+      ],
+      "notesEn": [
+        "White Tea",
+        "Atlas Cedar",
+        "Soft Musk"
+      ],
+      "category": "unisex",
+      "volumeMl": 100,
+      "concentration": "Eau de Parfum",
+      "priceEgp": 395,
+      "longevity": 4,
+      "sillage": 3,
+      "inStock": true,
+      "featured": false,
+      "bottleTone": "emerald"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-1795567087047",
+      "orderNumber": "ANAS-1045",
+      "createdAt": "2026-11-25T00:38:07.047Z",
+      "customerName": "Adham altonsy",
+      "phone": "01028809090",
+      "governorateId": "sharqia",
+      "governorateAr": "الشرقية (الزقازيق والمراكز)",
+      "governorateEn": "Sharqia (Zagazig & Centers)",
+      "addressLine": "asds asda",
+      "paymentMethod": "cod",
+      "status": "new",
+      "items": [
+        {
+          "productId": "prod-royal-oud",
+          "nameAr": "عود رويال فيلفيت",
+          "nameEn": "Royal Oud Velvet",
+          "volumeMl": 100,
+          "unitPriceEgp": 490,
+          "quantity": 1
+        }
+      ],
+      "subtotalEgp": 490,
+      "shippingFeeEgp": 40,
+      "discountEgp": 0,
+      "totalEgp": 530,
+      "freeGiftEligible": false
+    },
+    {
+      "id": "ord-1042",
+      "orderNumber": "ANAS-1042",
+      "createdAt": "2026-11-23T18:15:00.000Z",
+      "customerName": "أحمد محمود السيد",
+      "phone": "01014829310",
+      "governorateId": "sharqia",
+      "governorateAr": "الشرقية (الزقازيق والمراكز)",
+      "governorateEn": "Sharqia (Zagazig & Centers)",
+      "addressLine": "الزقازيق - القومية - شارع طلبة عويضة برج النور",
+      "notes": "التواصل واتساب قبل الوصول بـ 15 دقيقة",
+      "paymentMethod": "cod",
+      "status": "confirmed",
+      "items": [
+        {
+          "productId": "prod-royal-oud",
+          "nameAr": "عود رويال فيلفيت",
+          "nameEn": "Royal Oud Velvet",
+          "volumeMl": 100,
+          "unitPriceEgp": 490,
+          "quantity": 1
+        },
+        {
+          "productId": "prod-amber-sultan",
+          "nameAr": "عنبر سلطان ريزيرف",
+          "nameEn": "Amber Sultan Reserve",
+          "volumeMl": 100,
+          "unitPriceEgp": 465,
+          "quantity": 1
+        }
+      ],
+      "subtotalEgp": 955,
+      "shippingFeeEgp": 40,
+      "discountEgp": 0,
+      "totalEgp": 995,
+      "freeGiftEligible": true
+    },
+    {
+      "id": "ord-1041",
+      "orderNumber": "ANAS-1041",
+      "createdAt": "2026-11-23T15:40:00.000Z",
+      "customerName": "سارة عبد الرحمن",
+      "phone": "01149201844",
+      "governorateId": "cairo",
+      "governorateAr": "القاهرة الكبرى",
+      "governorateEn": "Greater Cairo",
+      "addressLine": "مدينة نصر - شارع عباس العقاد - عمارة 24",
+      "paymentMethod": "cod",
+      "status": "new",
+      "items": [
+        {
+          "productId": "prod-nuit-blanche",
+          "nameAr": "نوي بلانش إلكسير",
+          "nameEn": "Nuit Blanche Elixir",
+          "volumeMl": 100,
+          "unitPriceEgp": 440,
+          "quantity": 1
+        }
+      ],
+      "subtotalEgp": 440,
+      "shippingFeeEgp": 60,
+      "discountEgp": 0,
+      "totalEgp": 500,
+      "freeGiftEligible": false
+    }
+  ]
+}

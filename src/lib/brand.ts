@@ -1,0 +1,17 @@
+export const BRAND_INFO = {
+  scriptName: "Maison",
+  mainName: "ANAS",
+  subName: "Parfums",
+  fullNameEn: "Maison ANAS Parfums",
+  fullNameAr: "عطور ميسون أنس",
+  cityAr: "الزقازيق، محافظة الشرقية، مصر",
+  cityEn: "Zagazig, Sharqia, Egypt",
+  phoneDisplay: "011 29420356",
+  whatsappInternational: "201129420356",
+  email: "hozaefarashwan2@gmail.com",
+  facebookUrl: "https://www.facebook.com/profile.php?id=61569468244586",
+  youtubeUrl: "https://youtube.com/@hozaefarashwan1143?si=TqHo0GIz-KuykPmf",
+  freeGiftThresholdEgp: 800,
+  freeGiftLabelAr: "عينة عطرية فاخرة 10 مل مجاناً",
+  freeGiftLabelEn: "Complimentary 10ml Luxury Tester",
+};
