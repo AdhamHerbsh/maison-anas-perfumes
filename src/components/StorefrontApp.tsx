@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ShoppingBag,
   MessageCircle,
@@ -15,6 +16,8 @@ import {
   ArrowUpRight,
   Gift,
   FileText,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import {
   Category,
@@ -29,6 +32,38 @@ import { GOVERNORATES, getGovernorateById } from "@/lib/governorates";
 import { buildWhatsAppOrderMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
 import { BrandLogo } from "./BrandLogo";
 import { FlaconIllustration } from "./FlaconIllustration";
+
+const PRODUCT_IMAGES: Record<string, string> = {
+  "prod-royal-oud": "/assets/resources/p1.jpg",
+  "prod-nuit-blanche": "/assets/resources/p7.jpg",
+  "prod-amber-sultan": "/assets/resources/p4.jpg",
+  "prod-rose-damascena": "/assets/resources/p3.jpg",
+  "prod-noir-intense": "/assets/resources/p2.jpg",
+  "prod-cedre-blanc": "/assets/resources/p6.jpg",
+};
+
+const CAMPAIGN_IMAGES = [
+  {
+    src: "/assets/resources/image1.jpg",
+    alt: "Maison ANAS special offer: buy two perfumes and get one free",
+  },
+  {
+    src: "/assets/resources/image2.jpg",
+    alt: "Maison ANAS perfume collection campaign",
+  },
+  {
+    src: "/assets/resources/image3.jpg",
+    alt: "Maison ANAS fragrance campaign featuring perfume application",
+  },
+  {
+    src: "/assets/resources/image4.jpg",
+    alt: "Maison ANAS signature perfume campaign",
+  },
+  {
+    src: "/assets/resources/p5.jpg",
+    alt: "Maison ANAS perfume gift box and presentation",
+  },
+];
 
 const COPY = {
   ar: {
@@ -171,9 +206,30 @@ export function StorefrontApp({
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
+  const campaignCarouselRef = useRef<HTMLDivElement>(null);
+  const productCarouselRef = useRef<HTMLDivElement>(null);
 
   const t = COPY[locale];
   const isAr = locale === "ar";
+
+  function scrollCarousel(
+    carousel: HTMLDivElement | null,
+    direction: "previous" | "next"
+  ) {
+    if (!carousel) return;
+
+    const directionMultiplier = direction === "next" ? 1 : -1;
+    const localeMultiplier = carousel.dir === "rtl" ? -1 : 1;
+    carousel.scrollBy({
+      left:
+        directionMultiplier *
+        localeMultiplier *
+        Math.max(carousel.clientWidth * 0.8, 280),
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  }
 
   useEffect(() => {
     document.documentElement.dir = isAr ? "rtl" : "ltr";
@@ -384,32 +440,41 @@ export function StorefrontApp({
       </header>
 
       {/* Editorial Hero */}
-      <section className="border-b border-[#E8E2D7] bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20 text-center">
-          <p className="inline-block px-3.5 py-1 mb-6 text-xs font-medium bg-[#FAF8F5] border border-[#E8E2D7] text-[#9E7C3C]">
+      <section className="relative isolate overflow-hidden border-b border-[#E8E2D7] bg-white">
+        <Image
+          src="/assets/resources/background.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="animate-hero-drift object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-white/30" />
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20 text-center">
+          <p className="animate-rise-in inline-block px-3.5 py-1 mb-6 text-xs font-medium bg-[#FAF8F5] border border-[#E8E2D7] text-[#9E7C3C]">
             {t.badge}
           </p>
 
-          <div className="flex justify-center mb-6">
+          <div className="animate-rise-in animation-delay-100 flex justify-center mb-6">
             <BrandLogo />
           </div>
 
           <h1
-            className={`max-w-2xl mx-auto text-3xl sm:text-5xl font-bold text-[#111111] leading-tight ${
+            className={`animate-rise-in animation-delay-200 max-w-2xl mx-auto text-3xl sm:text-5xl font-bold text-[#111111] leading-tight ${
               isAr ? "font-amiri" : "font-serif"
             }`}
           >
             {t.heroTitle}
           </h1>
 
-          <p className="max-w-xl mx-auto mt-4 text-sm sm:text-base text-[#6E685F] leading-relaxed">
+          <p className="animate-rise-in animation-delay-300 max-w-xl mx-auto mt-4 text-sm sm:text-base text-[#6E685F] leading-relaxed">
             {t.heroLead}
           </p>
 
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="animate-rise-in animation-delay-400 mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="#collection"
-              className="w-full sm:w-auto px-7 py-3.5 bg-[#111111] text-[#FAF8F5] text-xs sm:text-sm font-semibold hover:bg-[#262421] transition"
+              className="w-full sm:w-auto px-7 py-3.5 bg-[#111111] text-[#FAF8F5] text-xs sm:text-sm font-semibold hover:bg-[#262421] hover:scale-[1.02] transition duration-300"
             >
               {t.ctaBrowse}
             </a>
@@ -417,7 +482,7 @@ export function StorefrontApp({
               href={whatsappCheckoutHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white border border-[#111111] text-[#111111] text-xs sm:text-sm font-semibold hover:bg-[#FAF8F5] transition"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white border border-[#111111] text-[#111111] text-xs sm:text-sm font-semibold hover:bg-[#FAF8F5] hover:scale-[1.02] transition duration-300"
             >
               <MessageCircle className="w-4 h-4 text-[#B89552]" />
               <span>{t.ctaWhatsapp}</span>
@@ -459,6 +524,81 @@ export function StorefrontApp({
         </div>
       </section>
 
+      {/* Campaign and product photography */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
+        <div className="mb-5 flex items-end justify-between gap-4">
+          <h2
+            className={`text-2xl font-bold text-[#111111] ${
+              isAr ? "font-amiri" : "font-serif"
+            }`}
+          >
+            {isAr ? "عروض Maison ANAS" : "Maison ANAS Campaigns"}
+            <span className="mt-1 block text-xs font-normal text-[#6E685F]">
+              {isAr
+                ? "اكتشف العروض ومشاهد العطور من مجموعتنا"
+                : "Explore our offers and fragrance collection"}
+            </span>
+          </h2>
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              aria-controls="campaign-swiper"
+              onClick={() =>
+                scrollCarousel(campaignCarouselRef.current, "previous")
+              }
+              aria-label={isAr ? "العروض السابقة" : "Previous campaigns"}
+              className="inline-flex h-10 w-10 items-center justify-center border border-[#E8E2D7] bg-white text-[#111111] transition hover:border-[#B89552] hover:bg-[#FAF8F5] active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B89552]"
+            >
+              {isAr ? (
+                <ChevronRight className="h-4 w-4" />
+              ) : (
+                <ChevronLeft className="h-4 w-4" />
+              )}
+            </button>
+            <button
+              type="button"
+              aria-controls="campaign-swiper"
+              onClick={() => scrollCarousel(campaignCarouselRef.current, "next")}
+              aria-label={isAr ? "العروض التالية" : "Next campaigns"}
+              className="inline-flex h-10 w-10 items-center justify-center border border-[#E8E2D7] bg-white text-[#111111] transition hover:border-[#B89552] hover:bg-[#FAF8F5] active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B89552]"
+            >
+              {isAr ? (
+                <ChevronLeft className="h-4 w-4" />
+              ) : (
+                <ChevronRight className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        </div>
+        <div
+          id="campaign-swiper"
+          ref={campaignCarouselRef}
+          dir={isAr ? "rtl" : "ltr"}
+          role="region"
+          tabIndex={0}
+          aria-label={isAr ? "معرض عروض العطور" : "Perfume campaign carousel"}
+          aria-roledescription="carousel"
+          className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth pb-3 scrollbar-hide sm:gap-4"
+        >
+          {CAMPAIGN_IMAGES.map((campaign, index) => (
+            <a
+              key={campaign.src}
+              href="#collection"
+              style={{ animationDelay: `${index * 80}ms` }}
+              className="animate-rise-in group relative aspect-[4/5] w-[76%] shrink-0 snap-start overflow-hidden border border-[#E8E2D7] bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]"
+            >
+              <Image
+                src={campaign.src}
+                alt={campaign.alt}
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </a>
+          ))}
+        </div>
+      </section>
+
       {/* Fragrance Collection */}
       <main id="collection" className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8">
@@ -477,46 +617,101 @@ export function StorefrontApp({
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap gap-2">
-            {(
-              [
-                { id: "all", label: t.filterAll },
-                { id: "men", label: t.filterMen },
-                { id: "women", label: t.filterWomen },
-                { id: "unisex", label: t.filterUnisex },
-              ] as const
-            ).map((tab) => (
+          <div className="flex flex-col items-start gap-3 sm:items-end">
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap gap-2">
+              {(
+                [
+                  { id: "all", label: t.filterAll },
+                  { id: "men", label: t.filterMen },
+                  { id: "women", label: t.filterWomen },
+                  { id: "unisex", label: t.filterUnisex },
+                ] as const
+              ).map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setCategory(tab.id)}
+                  className={`px-4 py-2 text-xs font-semibold border transition duration-300 hover:-translate-y-0.5 ${
+                    category === tab.id
+                      ? "bg-[#111111] text-[#FAF8F5] border-[#111111]"
+                      : "bg-white text-[#6E685F] border-[#E8E2D7] hover:border-[#111111]"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            <div className="flex gap-2">
               <button
-                key={tab.id}
                 type="button"
-                onClick={() => setCategory(tab.id)}
-                className={`px-4 py-2 text-xs font-semibold border transition ${
-                  category === tab.id
-                    ? "bg-[#111111] text-[#FAF8F5] border-[#111111]"
-                    : "bg-white text-[#6E685F] border-[#E8E2D7] hover:border-[#111111]"
-                }`}
+                aria-controls="product-swiper"
+                onClick={() =>
+                  scrollCarousel(productCarouselRef.current, "previous")
+                }
+                aria-label={isAr ? "العطور السابقة" : "Previous fragrances"}
+                className="inline-flex h-9 w-9 items-center justify-center border border-[#E8E2D7] bg-white text-[#111111] transition hover:border-[#B89552] hover:bg-[#FAF8F5] active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B89552]"
               >
-                {tab.label}
+                {isAr ? (
+                  <ChevronRight className="h-4 w-4" />
+                ) : (
+                  <ChevronLeft className="h-4 w-4" />
+                )}
               </button>
-            ))}
+              <button
+                type="button"
+                aria-controls="product-swiper"
+                onClick={() => scrollCarousel(productCarouselRef.current, "next")}
+                aria-label={isAr ? "العطور التالية" : "Next fragrances"}
+                className="inline-flex h-9 w-9 items-center justify-center border border-[#E8E2D7] bg-white text-[#111111] transition hover:border-[#B89552] hover:bg-[#FAF8F5] active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#B89552]"
+              >
+                {isAr ? (
+                  <ChevronLeft className="h-4 w-4" />
+                ) : (
+                  <ChevronRight className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProducts.map((product) => {
+        {/* Product Swiper */}
+        <div
+          id="product-swiper"
+          ref={productCarouselRef}
+          dir={isAr ? "rtl" : "ltr"}
+          role="region"
+          tabIndex={0}
+          aria-label={isAr ? "تشكيلة العطور" : "Fragrance collection carousel"}
+          aria-roledescription="carousel"
+          className="flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain scroll-smooth pb-4 scrollbar-hide"
+        >
+          {filteredProducts.map((product, index) => {
             const name = isAr ? product.nameAr : product.nameEn;
             const subtitle = isAr ? product.subtitleAr : product.subtitleEn;
             const notes = isAr ? product.notesAr : product.notesEn;
+            const productImage = PRODUCT_IMAGES[product.id];
 
             return (
               <article
                 key={product.id}
-                className="group bg-white border border-[#E8E2D7] flex flex-col justify-between transition hover:border-[#B89552]"
+                style={{ animationDelay: `${index * 70}ms` }}
+                className="animate-rise-in group flex w-[85%] shrink-0 snap-start flex-col justify-between border border-[#E8E2D7] bg-white transition duration-300 hover:-translate-y-1 hover:border-[#B89552] hover:shadow-2xl sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
               >
                 <div>
-                  <FlaconIllustration tone={product.bottleTone} title={name} />
+                  {productImage ? (
+                    <div className="relative aspect-[4/5] overflow-hidden border-b border-[#E8E2D7] bg-[#FAF8F5]">
+                      <Image
+                        src={productImage}
+                        alt={name}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  ) : (
+                    <FlaconIllustration tone={product.bottleTone} title={name} />
+                  )}
 
                   <div className="p-5 space-y-3">
                     <div className="flex items-center justify-between text-[11px] text-[#6E685F]">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import {
   Monitor,
   Smartphone,
@@ -78,45 +79,15 @@ const MaisonAnasEmblem = ({ size = 44, showWordmark = true, dark = false }) => {
   );
 };
 
-// --- Minimalist Haute Parfumerie Bottle Silhouette ---
-const MinimalBottle = ({ titleEn, volume = '100 ML', tone = '#DFC9A6' }) => (
-  <div className="w-full h-52 sm:h-56 bg-[#F5F1EA] rounded-2xl flex items-center justify-center p-5 relative overflow-hidden group">
-    <div
-      className="w-36 h-36 rounded-full opacity-35 blur-2xl absolute"
-      style={{ backgroundColor: tone }}
+const ScentImage = ({ titleEn, imageSrc }: { titleEn: string; imageSrc: string }) => (
+  <div className="w-full h-52 sm:h-56 bg-[#F5F1EA] rounded-2xl relative overflow-hidden group">
+    <Image
+      src={imageSrc}
+      alt={`${titleEn} perfume`}
+      fill
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      className="object-cover transition-transform duration-500 group-hover:scale-105"
     />
-    <div className="relative flex flex-col items-center transition-transform duration-500 group-hover:-translate-y-1">
-      <div className="w-7 h-6 bg-[#111111] rounded-t-[3px]" />
-      <div className="w-4 h-2 bg-[#B89552]" />
-      <div className="w-24 h-32 bg-white/85 border border-[#DCD4C6] rounded-[6px] shadow-[0_18px_35px_-15px_rgba(17,17,17,0.18)] p-2 flex flex-col justify-end">
-        <div
-          className="w-full h-[88%] rounded-[3px] flex items-center justify-center p-2"
-          style={{
-            background: `linear-gradient(180deg, ${tone}33 0%, ${tone}88 100%)`
-          }}
-        >
-          <div className="w-full bg-[#FAF8F5] border border-[#E8E2D7] py-2 px-1.5 text-center" dir="ltr">
-            <div
-              className="text-[7px] italic leading-none text-[#B89552]"
-              style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
-            >
-              Maison
-            </div>
-            <div
-              className="text-[11px] tracking-[0.18em] text-[#111111] mt-0.5"
-              style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
-            >
-              ANAS
-            </div>
-            <div className="w-5 h-[1px] bg-[#E8E2D7] mx-auto my-1" />
-            <div className="text-[6.5px] uppercase tracking-wider text-[#6E6A63] truncate">
-              {titleEn}
-            </div>
-            <div className="text-[6px] tracking-widest text-[#9C968C] mt-1">{volume}</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 );
 
@@ -132,7 +103,7 @@ const SIGNATURE_SCENTS = [
     volume: '100 ml',
     sillageLabelAr: 'ثبات يتجاوز ٢٤ ساعة',
     sillageLabelEn: '24h+ Longevity',
-    tone: '#C8A464'
+    imageSrc: '/assets/resources/p1.jpg'
   },
   {
     id: 'vanilla-silk',
@@ -144,7 +115,7 @@ const SIGNATURE_SCENTS = [
     volume: '100 ml',
     sillageLabelAr: 'ثبات وفوحان ١٨ ساعة',
     sillageLabelEn: '18h Longevity & Sillage',
-    tone: '#DFC29B'
+    imageSrc: '/assets/resources/p4.jpg'
   },
   {
     id: 'baccarat-crystal',
@@ -156,11 +127,27 @@ const SIGNATURE_SCENTS = [
     volume: '100 ml',
     sillageLabelAr: 'ثبات استثنائي +٣٦ ساعة',
     sillageLabelEn: '36h+ Signature Trail',
-    tone: '#D6A88A'
+    imageSrc: '/assets/resources/p6.jpg'
   }
 ];
 
-const INITIAL_ORDERS = [
+type PreviewOrder = {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  cityAr: string;
+  cityEn: string;
+  phone: string;
+  scentAr: string;
+  scentEn: string;
+  subtotal: number;
+  shipping: number;
+  total: number;
+  statusAr: string;
+  statusEn: string;
+};
+
+const INITIAL_ORDERS: PreviewOrder[] = [
   {
     id: '#MA-1042',
     nameAr: 'أحمد محمود السيد',
@@ -198,9 +185,9 @@ export default function App() {
   const [activeScreen, setActiveScreen] = useState('storefront'); // 'storefront' | 'checkout' | 'admin'
   const [deviceMode, setDeviceMode] = useState('desktop'); // 'desktop' | 'mobile'
   const [selectedScentId, setSelectedScentId] = useState('royal-oud');
-  const [orderNotice, setOrderNotice] = useState(null); // null | 'cod' | 'whatsapp'
-  const [orders, setOrders] = useState(INITIAL_ORDERS);
-  const [receiptOrder, setReceiptOrder] = useState(null);
+  const [orderNotice, setOrderNotice] = useState<'cod' | 'whatsapp' | null>(null);
+  const [orders, setOrders] = useState<PreviewOrder[]>(INITIAL_ORDERS);
+  const [receiptOrder, setReceiptOrder] = useState<PreviewOrder | null>(null);
   const [approved, setApproved] = useState(false);
 
   const isAr = lang === 'ar';
@@ -214,7 +201,7 @@ export default function App() {
     document.documentElement.lang = isAr ? 'ar' : 'en';
   }, [isAr]);
 
-  const handleSimulatedOrder = (method) => {
+  const handleSimulatedOrder = (method: 'cod' | 'whatsapp') => {
     const newOrder = {
       id: `#MA-${1043 + orders.length}`,
       nameAr: 'عميل جديد (معاينة)',
@@ -481,50 +468,80 @@ export default function App() {
 
               {/* Editorial Hero Section */}
               <div
-                className={`px-5 ${
-                  isMobilePreview ? 'py-9' : 'sm:px-12 py-12 sm:py-16'
-                } text-center max-w-2xl mx-auto space-y-4 sm:space-y-5`}
+                className="relative isolate overflow-hidden bg-[#241817] px-5 py-9 sm:px-12 sm:py-14"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(90deg, rgba(20, 12, 12, 0.94), rgba(20, 12, 12, 0.7)), url('/assets/resources/background.jpg')",
+                  backgroundPosition: 'center',
+                  backgroundSize: 'cover'
+                }}
               >
-                <div className="text-xs font-semibold text-[#B89552]">
-                  {isAr ? 'الزقازيق • جمهورية مصر العربية' : 'ZAGAZIG • EGYPT'}
+                <div className="relative mx-auto grid max-w-5xl items-center gap-7 md:grid-cols-2">
+                  <div className="space-y-4 text-center md:text-start">
+                    <div className="text-xs font-semibold text-[#D5B875]">
+                      {isAr ? 'الزقازيق • جمهورية مصر العربية' : 'ZAGAZIG • EGYPT'}
+                    </div>
+
+                    <h2
+                      className={`display-heading font-bold text-white ${
+                        isMobilePreview ? 'text-2xl' : 'text-3xl sm:text-5xl'
+                      }`}
+                    >
+                      {isAr
+                        ? 'عطور مميزة بأسعار تنافسك.. ثبات وفوحان يليق بذوقك'
+                        : 'Distinctive Scents.. Lasting Sillage Crafted for Your Taste'}
+                    </h2>
+
+                    <p className="mx-auto max-w-md text-xs text-white/80 sm:text-sm md:mx-0">
+                      {isAr
+                        ? 'توليفات عطرية مركّزة تدوم طويلاً، مع إمكانية المعاينة والدفع عند الاستلام حتى باب المنزل.'
+                        : 'High-concentration Extrait formulations designed to linger, delivered to your doorstep with Cash on Delivery.'}
+                    </p>
+
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2 md:justify-start">
+                      <button
+                        onClick={() => {
+                          setOrderNotice(null);
+                          setActiveScreen('checkout');
+                        }}
+                        className="px-6 py-3 rounded-full bg-[#FAF8F5] text-[#111111] text-xs font-semibold hover:bg-white transition cursor-pointer"
+                      >
+                        {isAr ? 'اطلب الآن • الدفع عند الاستلام' : 'Order Now • Cash on Delivery'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setOrderNotice(null);
+                          setActiveScreen('checkout');
+                        }}
+                        className="px-5 py-3 rounded-full bg-white/10 border border-white/30 text-white text-xs font-semibold hover:bg-white/20 transition inline-flex items-center gap-2 cursor-pointer"
+                      >
+                        <MessageCircle className="w-3.5 h-3.5 text-[#68D391]" />
+                        <span>{isAr ? 'اطلب عبر واتساب' : 'Order via WhatsApp'}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-white/20 shadow-2xl">
+                    <Image
+                      src="/assets/resources/image2.jpg"
+                      alt="Maison ANAS Parfums collection"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
+              </div>
 
-                <h2
-                  className={`display-heading font-bold text-[#111111] ${
-                    isMobilePreview ? 'text-2xl' : 'text-3xl sm:text-5xl'
-                  }`}
-                >
-                  {isAr
-                    ? 'عطور مميزة بأسعار تنافسك.. ثبات وفوحان يليق بذوقك'
-                    : 'Distinctive Scents.. Lasting Sillage Crafted for Your Taste'}
-                </h2>
-
-                <p className="text-xs sm:text-sm text-[#6E6A63] max-w-md mx-auto">
-                  {isAr
-                    ? 'توليفات عطرية مركّزة تدوم طويلاً، مع إمكانية المعاينة والدفع عند الاستلام حتى باب المنزل.'
-                    : 'High-concentration Extrait formulations designed to linger, delivered to your doorstep with Cash on Delivery.'}
-                </p>
-
-                <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-                  <button
-                    onClick={() => {
-                      setOrderNotice(null);
-                      setActiveScreen('checkout');
-                    }}
-                    className="px-6 py-3 rounded-full bg-[#111111] text-[#FAF8F5] text-xs font-semibold hover:bg-[#262626] transition cursor-pointer"
-                  >
-                    {isAr ? 'اطلب الآن • الدفع عند الاستلام' : 'Order Now • Cash on Delivery'}
-                  </button>
-                  <button
-                    onClick={() => {
-                      setOrderNotice(null);
-                      setActiveScreen('checkout');
-                    }}
-                    className="px-5 py-3 rounded-full bg-white border border-[#E8E2D7] text-[#111111] text-xs font-semibold hover:border-[#B89552] transition inline-flex items-center gap-2 cursor-pointer"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 text-[#1F7A4C]" />
-                    <span>{isAr ? 'اطلب عبر واتساب' : 'Order via WhatsApp'}</span>
-                  </button>
+              <div className={`px-4 pt-5 ${isMobilePreview ? 'pb-2' : 'sm:px-10'}`}>
+                <div className="relative mx-auto aspect-[4/5] max-w-xl overflow-hidden rounded-2xl bg-[#111111]">
+                  <Image
+                    src="/assets/resources/image1.jpg"
+                    alt="Maison ANAS special offer: buy two perfumes and get one free"
+                    fill
+                    sizes="(max-width: 640px) 100vw, 1200px"
+                    className="object-cover"
+                  />
                 </div>
               </div>
 
@@ -549,10 +566,9 @@ export default function App() {
                       key={scent.id}
                       className="bg-white rounded-2xl border border-[#E8E2D7] p-4 flex flex-col justify-between space-y-4 hover:border-[#B89552] transition-colors"
                     >
-                      <MinimalBottle
+                      <ScentImage
                         titleEn={scent.nameEn}
-                        volume={scent.volume.toUpperCase()}
-                        tone={scent.tone}
+                        imageSrc={scent.imageSrc}
                       />
 
                       <div className="space-y-2 px-1">

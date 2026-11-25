@@ -26,7 +26,7 @@
       "originalPriceEgp": 620,
       "longevity": 5,
       "sillage": 5,
-      "inStock": false,
+      "inStock": true,
       "featured": true,
       "bottleTone": "obsidian"
     },
